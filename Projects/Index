@@ -6,6 +6,7 @@ number please”.
 When the user guesses the correct number, the program displays the number of
 guesses the player used to arrive at the number
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 2: SNAKE, WATER, GUN
 Snake, water, gun or rock, paper, scissors is a game most of us have played during
@@ -13,16 +14,19 @@ school time. (I sometimes play it even now).
 Write a C program capable of playing this game with you.
 Your program should be able to print the result after you choose snake/water or gun
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 3: NUMBER SYSTEM CONVERTER
 A console tool that converts between: Decimal,Binary,Octal,Hex
 Skills shown:loops,conditionals,ASCII handling,math
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 4: STUDENT RECORD MANAGEMENT (FILE HANDELING)
 Functions:Add student,Delete student,Modify record,Search by name/roll,Save to file
 Skills shown:structs (struct Student),file I/O (fopen, fread, fwrite),modular programming (.c + .h)
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 5: TIC TAC TOE
  X |   | O
@@ -32,6 +36,7 @@ PROJECT 5: TIC TAC TOE
  O |   | X
 Skills shown: 2D arrays,game logic,input validation,simple AI logic (optional = medium+)
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 6: Banking System (With Authentication + Transactions)
 Features:
@@ -39,6 +44,7 @@ register/login system,deposit / withdrawal,transfer between accounts,transaction
 Showcases:
 structs,password hashing (simple),random account numbers,file database,edge-case handling
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 PROJECT 7: Dynamic Data Structure Console App
 Search:
