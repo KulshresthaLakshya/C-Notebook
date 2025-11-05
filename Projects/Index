@@ -1,1 +1,49 @@
+PROJECT 1: NUMBER GUESSING GAME
+We will write a program that generates a random number and asks the player to guess
+it. If the player’s guess is higher than the actual number, the program displays “Lower
+number please”. Similarly, if the user’s guess is too low, the program prints “Higher
+number please”.
+When the user guesses the correct number, the program displays the number of
+guesses the player used to arrive at the number
 
+
+PROJECT 2: SNAKE, WATER, GUN
+Snake, water, gun or rock, paper, scissors is a game most of us have played during
+school time. (I sometimes play it even now).
+Write a C program capable of playing this game with you.
+Your program should be able to print the result after you choose snake/water or gun
+
+
+PROJECT 3: NUMBER SYSTEM CONVERTER
+A console tool that converts between: Decimal,Binary,Octal,Hex
+Skills shown:loops,conditionals,ASCII handling,math
+
+
+PROJECT 4: STUDENT RECORD MANAGEMENT (FILE HANDELING)
+Functions:Add student,Delete student,Modify record,Search by name/roll,Save to file
+Skills shown:structs (struct Student),file I/O (fopen, fread, fwrite),modular programming (.c + .h)
+
+
+PROJECT 5: TIC TAC TOE
+ X |   | O
+-----------
+   | X |
+-----------
+ O |   | X
+Skills shown: 2D arrays,game logic,input validation,simple AI logic (optional = medium+)
+
+
+PROJECT 6: Banking System (With Authentication + Transactions)
+Features:
+register/login system,deposit / withdrawal,transfer between accounts,transaction history,pin lockout after 3 wrong tries,persistent file database
+Showcases:
+structs,password hashing (simple),random account numbers,file database,edge-case handling
+
+
+PROJECT 7: Dynamic Data Structure Console App
+Search:
+by title,by author,by ID,
+Sort:
+alphabetical / ID,Borrow/return logic
+Showcases:
+linked lists,pointer manipulation,memory (malloc, free),struct relationships
