@@ -22,7 +22,7 @@ Skills shown:loops,conditionals,ASCII handling,math
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-PROJECT 4: STUDENT RECORD MANAGEMENT (FILE HANDELING)
+PROJECT 4: STUDENT RECORD MANAGEMENT (FILE HANDELING) {FOR COLLEGE PROJECT SUBMISSION]
 Functions:Add student,Delete student,Modify record,Search by name/roll,Save to file
 Skills shown:structs (struct Student),file I/O (fopen, fread, fwrite),modular programming (.c + .h)
 
