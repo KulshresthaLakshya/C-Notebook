@@ -1,0 +1,484 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define MAX 200
+
+char b13_ids[MAX][20];
+char b13_names[MAX][50];
+char b13_mobile[MAX][20];
+int b13_att[MAX];
+int b13_count = 0;
+char b14_ids[MAX][20];
+char b14_names[MAX][50];
+char b14_mobile[MAX][20];
+int b14_att[MAX];
+int b14_count = 0;
+char b16_ids[MAX][20];
+char b16_names[MAX][50];
+char b16_mobile[MAX][20];
+int b16_att[MAX];
+int b16_count = 0;
+
+int loginpage();
+int loginpage_idinput(char *ID, char *pass);
+void homepage();
+void profile();
+void timetable();
+void classes();
+void batches();
+void batch13();
+void batch14();
+void batch16();
+void loadBatch13();
+void loadBatch14();
+void loadBatch16();
+void printBatch13Students();
+void printBatch14Students();
+void printBatch16Students();
+void markAttendance13();
+void markAttendance14();
+void markAttendance16();
+void searchStudent();
+void editStudentByID(int batchNumber);
+void saveBatchToFile(int batchNumber);
+
+int main()
+{
+    if (loginpage() == 1)
+        homepage();
+    return 0;
+}
+
+int loginpage()
+{
+    int getin, attempts = 3;
+    char ID[20], pass[20];
+
+    printf("=== FACULTY MANAGEMENT SYSTEM ===\n");
+    printf("1. Login\n2. Quit\n");
+    scanf("%d", &getin);
+
+    switch (getin)
+    {
+        case 1:
+            while (attempts > 0)
+            {
+                printf("\nID: ");
+                scanf("%19s", ID);
+
+                printf("Password: ");
+                scanf("%19s", pass);
+
+                if (loginpage_idinput(ID, pass))
+                    return 1;
+
+                attempts--;
+                printf("Invalid! Attempts left: %d\n", attempts);
+            }
+            printf("Too many attempts!\n");
+            return 0;
+
+        case 2:
+            printf("Goodbye!\n");
+            return 0;
+
+        default:
+            printf("Invalid choice\n");
+            return 1;
+    }
+}
+
+int loginpage_idinput(char *ID, char *pass)
+{
+    char c_ID[] = "Bhupendra";
+    char c_pass[] = "Bhupendra@1234";
+
+    if (!strcmp(ID, c_ID) && !strcmp(pass, c_pass))
+    {
+        printf("Welcome %s sir!\n", ID);
+        sleep(1);
+        return 1;
+    }
+    return 0;
+}
+
+void homepage()
+{
+    int ch;
+
+    while (1)
+    {
+        printf("\n=========== MAIN MENU ===========\n");
+        printf("1. Profile\n2. Time Table\n3. Classes\n4. Batches\n5. Global Search\n6. Quit\n");
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+            case 1: profile(); break;
+            case 2: timetable(); break;
+            case 3: classes(); break;
+            case 4: batches(); break;
+            case 5: searchStudent(); break;
+            case 6: exit(0);
+            default: printf("Invalid!\n");
+        }
+    }
+}
+
+
+void profile()
+{
+    int pc;
+    printf("\n============ PROFILE ============\n");
+    printf("Name : Bhupendra Singh Bisht\n");
+    printf("Teaching batches: 13, 14, 16\n");
+    printf("Email: bhupendrasingh@ddn.upes.ac.in\n");
+    printf("Mobile: 95600 33900\n");
+    printf("1. Back\n2. Log out\n");
+    scanf("%d", &pc);
+
+    if (pc == 2)
+        loginpage();
+}
+
+void timetable()
+{
+    printf("\n============== TIMETABLE ============\n");
+    printf("Today's total classes: 6\n");
+    printf("Completed: 3\n");
+}
+
+void classes()
+{
+    int cc;
+    printf("\n========= CLASSES =========\n");
+    printf("Total: 100\nLeft: 45\n");
+    printf("Type 1 to exit: ");
+    while (1)
+    {
+        scanf("%d", &cc);
+        if (cc == 1) return;
+    }
+}
+
+void batches()
+{
+    int btc;
+
+    printf("\n=========== BATCHES =============\n");
+    printf("13. Batch 13\n");
+    printf("14. Batch 14\n");
+    printf("16. Batch 16\n");
+    printf("1. Back\n");
+    scanf("%d", &btc);
+
+    switch (btc)
+    {
+        case 13: batch13(); break;
+        case 14: batch14(); break;
+        case 16: batch16(); break;
+        case 1: return;
+        default: printf("Invalid!\n");
+    }
+}
+
+void loadBatch13()
+{
+    FILE *fp = fopen("batch13.txt", "r");
+    if (!fp) { printf("Error loading batch13.txt\n"); return; }
+
+    b13_count = 0;
+    while (fscanf(fp, "%s \"%[^\"]\" %s", b13_ids[b13_count], b13_names[b13_count], b13_mobile[b13_count]) == 3)
+    {
+        b13_att[b13_count] = -1;
+        b13_count++;
+    }
+    fclose(fp);
+}
+
+void loadBatch14()
+{
+    FILE *fp = fopen("batch14.txt", "r");
+    if (!fp) { printf("Error loading batch14.txt\n"); return; }
+
+    b14_count = 0;
+    while (fscanf(fp, "%s \"%[^\"]\" %s", b14_ids[b14_count], b14_names[b14_count], b14_mobile[b14_count]) == 3)
+    {
+        b14_att[b14_count] = -1;
+        b14_count++;
+    }
+    fclose(fp);
+}
+
+void loadBatch16()
+{
+    FILE *fp = fopen("batch16.txt", "r");
+    if (!fp) { printf("Error loading batch16.txt\n"); return; }
+
+    b16_count = 0;
+    while (fscanf(fp, "%s \"%[^\"]\" %s", b16_ids[b16_count], b16_names[b16_count], b16_mobile[b16_count]) == 3)
+    {
+        b16_att[b16_count] = -1;
+        b16_count++;
+    }
+    fclose(fp);
+}
+
+void printBatch13Students()
+{
+    printf("\n==== BATCH 13 STUDENTS ====\n");
+    for (int i = 0; i < b13_count; i++)
+        printf("%s - %s - %s\n", b13_ids[i], b13_names[i], b13_mobile[i]);
+}
+
+void printBatch14Students()
+{
+    printf("\n==== BATCH 14 STUDENTS ====\n");
+    for (int i = 0; i < b14_count; i++)
+        printf("%s - %s - %s\n", b14_ids[i], b14_names[i], b14_mobile[i]);
+}
+
+void printBatch16Students()
+{
+    printf("\n==== BATCH 16 STUDENTS ====\n");
+    for (int i = 0; i < b16_count; i++)
+        printf("%s - %s - %s\n", b16_ids[i], b16_names[i], b16_mobile[i]);
+}
+
+void markAttendance13()
+{
+    int present = 0, absent = 0;
+
+    printf("\n==== ATTENDANCE (Batch 13) ====\n");
+
+    loadBatch13();
+
+    for (int i = 0; i < b13_count; i++)
+    {
+        printf("%s (%s) → Present=1 / Absent=0: ",
+               b13_names[i], b13_ids[i]);
+
+        scanf("%d", &b13_att[i]);
+        if (b13_att[i] == 1) present++; else absent++;
+    }
+
+    printf("\nSummary:\nPresent: %d\nAbsent: %d\n", present, absent);
+}
+
+void markAttendance14()
+{
+    int present = 0, absent = 0;
+
+    printf("\n==== ATTENDANCE (Batch 14) ====\n");
+
+    loadBatch14();
+
+    for (int i = 0; i < b14_count; i++)
+    {
+        printf("%s (%s) → Present=1 / Absent=0: ",
+               b14_names[i], b14_ids[i]);
+
+        scanf("%d", &b14_att[i]);
+        if (b14_att[i] == 1) present++; else absent++;
+    }
+
+    printf("\nSummary:\nPresent: %d\nAbsent: %d\n", present, absent);
+}
+
+void markAttendance16()
+{
+    int present = 0, absent = 0;
+
+    printf("\n==== ATTENDANCE (Batch 16) ====\n");
+
+    loadBatch16();
+
+    for (int i = 0; i < b16_count; i++)
+    {
+        printf("%s (%s) → Present=1 / Absent=0: ",
+               b16_names[i], b16_ids[i]);
+
+        scanf("%d", &b16_att[i]);
+        if (b16_att[i] == 1) present++; else absent++;
+    }
+
+    printf("\nSummary:\nPresent: %d\nAbsent: %d\n", present, absent);
+}
+
+void searchStudent()
+{
+    char searchID[20];
+    printf("Enter student ID to search: ");
+    scanf("%s", searchID);
+
+    // ---- Batch 13 ----
+    for (int i = 0; i < b13_count; i++)
+    {
+        if (strcmp(b13_ids[i], searchID) == 0)
+        {
+            printf("Found in Batch 13:\n");
+            printf("Name: %s\nMobile: %s\n", b13_names[i], b13_mobile[i]);
+            return;
+        }
+    }
+
+    // ---- Batch 14 ----
+    for (int i = 0; i < b14_count; i++)
+    {
+        if (strcmp(b14_ids[i], searchID) == 0)
+        {
+            printf("Found in Batch 14:\n");
+            printf("Name: %s\nMobile: %s\n", b14_names[i], b14_mobile[i]);
+            return;
+        }
+    }
+
+    // ---- Batch 16 ----
+    for (int i = 0; i < b16_count; i++)
+    {
+        if (strcmp(b16_ids[i], searchID) == 0)
+        {
+            printf("Found in Batch 16:\n");
+            printf("Name: %s\nMobile: %s\n", b16_names[i], b16_mobile[i]);
+            return;
+        }
+    }
+
+    printf("Student not found.\n");
+}
+
+void editStudentByID(int batch)
+{
+    char editID[20];
+    int found = -1;
+
+    printf("Enter student ID to edit: ");
+    scanf("%s", editID);
+
+    char (*ids)[20];
+    char (*names)[50];
+    char (*mobiles)[20];
+    int count;
+
+    if (batch == 13) { ids = b13_ids; names = b13_names; mobiles = b13_mobile; count = b13_count; }
+    if (batch == 14) { ids = b14_ids; names = b14_names; mobiles = b14_mobile; count = b14_count; }
+    if (batch == 16) { ids = b16_ids; names = b16_names; mobiles = b16_mobile; count = b16_count; }
+
+    for (int i = 0; i < count; i++)
+    {
+        if (strcmp(ids[i], editID) == 0)
+        {
+            found = i;
+            break;
+        }
+    }
+
+    if (found == -1)
+    {
+        printf("Student not found.\n");
+        return;
+    }
+
+    printf("Editing student: %s (%s)\n", names[found], ids[found]);
+
+    int choice;
+    printf("1. Edit name\n2. Edit mobile\n3. Edit both\nEnter: ");
+    scanf("%d", &choice);
+
+    if (choice == 1 || choice == 3)
+    {
+        printf("New name: ");
+        scanf(" %[^\n]", names[found]);
+    }
+
+    if (choice == 2 || choice == 3)
+    {
+        printf("New mobile: ");
+        scanf("%s", mobiles[found]);
+    }
+
+    saveBatchToFile(batch);
+    printf("Changes saved!\n");
+}
+
+
+void saveBatchToFile(int batch)
+{
+    FILE *fp;
+    int count;
+    char (*ids)[20];
+    char (*names)[50];
+    char (*mobiles)[20];
+
+    if (batch == 13) { fp = fopen("batch13.txt", "w"); ids=b13_ids; names=b13_names; mobiles=b13_mobile; count=b13_count; }
+    if (batch == 14) { fp = fopen("batch14.txt", "w"); ids=b14_ids; names=b14_names; mobiles=b14_mobile; count=b14_count; }
+    if (batch == 16) { fp = fopen("batch16.txt", "w"); ids=b16_ids; names=b16_names; mobiles=b16_mobile; count=b16_count; }
+
+    if (!fp) { printf("Error saving batch!\n"); return; }
+
+    for (int i = 0; i < count; i++)
+        fprintf(fp, "%s \"%s\" %s\n", ids[i], names[i], mobiles[i]);
+
+    fclose(fp);
+}
+
+void batch13()
+{
+    int c;
+    loadBatch13();
+
+    printf("\n========= BATCH 13 =========\n");
+    printf("1. Show students\n2. Attendance\n3. Search student\n4. Edit student\n5. Back\n");
+    scanf("%d", &c);
+
+    switch (c)
+    {
+        case 1: printBatch13Students(); break;
+        case 2: markAttendance13(); break;
+        case 3: searchStudent(); break;
+        case 4: editStudentByID(13); break;
+        case 5: return;
+    }
+}
+
+void batch14()
+{
+    int c;
+    loadBatch14();
+
+    printf("\n========= BATCH 14 =========\n");
+    printf("1. Show students\n2. Attendance\n3. Search student\n4. Edit student\n5. Back\n");
+    scanf("%d", &c);
+
+    switch (c)
+    {
+        case 1: printBatch14Students(); break;
+        case 2: markAttendance14(); break;
+        case 3: searchStudent(); break;
+        case 4: editStudentByID(14); break;
+        case 5: return;
+    }
+}
+
+void batch16()
+{
+    int c;
+    loadBatch16();
+
+    printf("\n========= BATCH 16 =========\n");
+    printf("1. Show students\n2. Attendance\n3. Search student\n4. Edit student\n5. Back\n");
+    scanf("%d", &c);
+
+    switch (c)
+    {
+        case 1: printBatch16Students(); break;
+        case 2: markAttendance16(); break;
+        case 3: searchStudent(); break;
+        case 4: editStudentByID(16); break;
+        case 5: return;
+    }
+}
